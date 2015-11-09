@@ -39,7 +39,9 @@ public class DiccVector implements Diccionario {
 					aux2 = linea.split("[ ]*\\*[ ]*");
 					palabra = new Palabra2(aux2[0],leng);
 					for (int i = 1; i < aux2.length; i++){
-						palabra.setTrad(aux2[i], leng[i-1]);
+						if (aux2[i] != null && !aux2[i].equals("") && !aux2[i].equals(" ")) {
+							palabra.setTrad(aux2[i], leng[i - 1]);
+						}
 					}
 					inserta(palabra);
 					linea = br.readLine();

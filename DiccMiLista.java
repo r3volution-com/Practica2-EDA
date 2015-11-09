@@ -14,8 +14,7 @@ public class DiccMiLista implements Diccionario {
 		lenguas = new Vector<Character> ();
 		dicc = new NodoL();
 	}
-	
-	
+
 	public void leeDiccionario(String f) {
 		if (f != null) {
 			FileReader fr;
@@ -65,28 +64,39 @@ public class DiccMiLista implements Diccionario {
 					return false;
 				}
 			}
+			if (dicc == null){
+				dicc = new NodoL();
+			}
 			NodoL aux = dicc;
 			while (aux != null){
 				Palabra2 pal = aux.getPalabra2();
-				if (pal != null && pal.getOrigen() != null && pal.getOrigen().compareToIgnoreCase(p.getOrigen()) == 0) {
-					char[] lenguas = p.getLenguas();
-					for (int i = 0; lenguas != null && i < lenguas.length; i++) {
-						if (p.getTraduccion(lenguas[i]) != null && pal.setTrad(p.getTraduccion(lenguas[i]), lenguas[i]) != -1) return true;
+				if (pal == null){
+					aux.setPalabra2(p);
+					return true;
+				} else {
+					if (pal.getOrigen() != null && pal.getOrigen().compareToIgnoreCase(p.getOrigen()) == 0) {
+						char[] lenguas = p.getLenguas();
+						for (int i = 0; lenguas != null && i < lenguas.length; i++) {
+							if (p.getTraduccion(lenguas[i]) != null && pal.setTrad(p.getTraduccion(lenguas[i]), lenguas[i]) != -1) return true;
+						}
+						return true;
+					} else if (aux.getNext() == null){
+						NodoL aux2 = new NodoL();
+						aux2.setPalabra2(p);
+						aux2.cambiaNext(aux.getNext());
+						aux.cambiaNext(aux2);
+						return true;
+					} else if (aux.getNext() != null && aux.getNext().getPalabra2() != null && aux.getNext().getPalabra2().getOrigen() != null && aux.getNext().getPalabra2().getOrigen().compareToIgnoreCase(p.getOrigen()) > 0) {
+						NodoL aux2 = new NodoL();
+						aux2.setPalabra2(p);
+						aux2.cambiaNext(aux.getNext());
+						aux.cambiaNext(aux2);
+						return true;
 					}
-					return true;
-				} else if (aux.getNext() != null && aux.getNext().getPalabra2() != null && aux.getNext().getPalabra2().getOrigen() != null && aux.getNext().getPalabra2().getOrigen().compareToIgnoreCase(p.getOrigen()) > 0) {
-					NodoL aux2 = new NodoL();
-					aux2.setPalabra2(p);
-					aux2.cambiaNext(aux.getNext());
-					aux.cambiaNext(aux2);
-					return true;
 				}
 				aux = aux.getNext();
 			}
-			if (dicc != null && dicc.getPalabra2() == null){
-				dicc.setPalabra2(p);
-				return true;
-			}
+
 		}
 		return false;
 	}
@@ -101,8 +111,9 @@ public class DiccMiLista implements Diccionario {
 		}
 		NodoL aux = dicc;
 		while (aux != null) {
-			if (aux.getNext() != null && aux.getNext().getPalabra2() != null && aux.getNext().getPalabra2() != null && aux.getNext().getPalabra2().getOrigen() != null && aux.getNext().getPalabra2().getOrigen().compareToIgnoreCase(s) == 0){
+			if (aux.getNext() != null && aux.getNext().getPalabra2() != null && aux.getNext().getPalabra2().getOrigen() != null && aux.getNext().getPalabra2().getOrigen().compareToIgnoreCase(s) == 0){
 				aux.cambiaNext(aux.getNext().getNext());
+				return true;
 			}
 			aux = aux.getNext();
 		}
@@ -116,8 +127,9 @@ public class DiccMiLista implements Diccionario {
 		if (s != null) {
 			while (aux != null) {
 				it++;
-				if (aux.getPalabra2() != null && aux.getPalabra2().getOrigen() != null && aux.getPalabra2().getOrigen().compareToIgnoreCase(s) == 0){
-					return it;
+				if (aux.getPalabra2() != null && aux.getPalabra2().getOrigen() != null){
+					if (aux.getPalabra2().getOrigen().compareToIgnoreCase(s) == 0) return it;
+					else if (aux.getPalabra2().getOrigen().compareToIgnoreCase(s) > 0) return it*-1;
 				}
 				aux = aux.getNext();
 			}
@@ -143,6 +155,8 @@ public class DiccMiLista implements Diccionario {
 	
 	public void visualiza() {
 		NodoL aux = dicc;
+		/*System.out.println("HOLA:"+dicc.getPalabra2().getOrigen());
+		System.out.println("HOLA:"+dicc.getNext().getPalabra2().getOrigen());*/
 		while (aux != null && aux.getPalabra2() != null) {
 			aux.getPalabra2().escribeInfo();
 			aux = aux.getNext();

@@ -19,14 +19,14 @@ public class Palabra2 {
 		}
 	}
 	public int setTrad(String t, char l){
-		if (t != null){
+		if (t != null && lenguas != null){
 			for (int i = 0; i<lenguas.length;i++) {
 				if (l == lenguas[i]) {
 					if (trad.elementAt(i) != null) {
 						if (!trad.elementAt(i).equalsIgnoreCase(t)){
 							trad.setElementAt(t, i);
 							return i;
-						} else return i;
+						} else return -1;
 					} else {
 						trad.setElementAt(t, i);
 						return i;

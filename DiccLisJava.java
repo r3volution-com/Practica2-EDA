@@ -39,7 +39,9 @@ public class DiccLisJava implements Diccionario {
 					aux2 = linea.split("[ ]*\\*[ ]*");
 					palabra = new Palabra2(aux2[0],leng);
 					for (int i = 1; i < aux2.length; i++){
-						palabra.setTrad(aux2[i], leng[i-1]);
+						if (aux2[i] != null && !aux2[i].equals("") && !aux2[i].equals(" ")) {
+							palabra.setTrad(aux2[i], leng[i - 1]);
+						}
 					}
 					inserta(palabra);
 					linea = br.readLine();
@@ -113,6 +115,7 @@ public class DiccLisJava implements Diccionario {
 
 	public void visualiza() {
 		for (int i = 0; i<dicc.size(); i++){
+			//System.out.println("SUPUTAMADRE"+dicc.get(i).getOrigen());
 			dicc.get(i).escribeInfo();
 		}
 	}
