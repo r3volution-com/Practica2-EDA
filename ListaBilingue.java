@@ -80,35 +80,107 @@ public class ListaBilingue {
     }
     public boolean borraO(String s){
         if (diccO != null && diccO.getPalabraO() != null && diccO.getPalabraO().compareToIgnoreCase(s) == 0){
-            if (diccO.getNextO() != null){
-                diccO = diccO.getNextO();
-            } else diccO = null;
-            return true;
-        }
-        NodoLD aux = diccO;
-        while (aux != null) {
-            if (aux.getNextO() != null && aux.getNextO().getPalabraO() != null && aux.getNextO().getPalabraO().compareToIgnoreCase(s) == 0){
-                aux.cambiaNextO(aux.getNextO().getNextO());
+            if (diccO == diccD){
+                NodoLD aux, aux2;
+                aux = diccO.getNextO();
+                aux2 = diccD.getNextD();
+                diccO = aux;
+                diccD = aux2;
                 return true;
+            } else {
+                NodoLD aux, aux2, aux3;
+                aux = diccO.getNextO();
+                aux2 = diccD;
+                while (aux2 != null) {
+                    if (diccO == aux2.getNextO()){
+                        aux3 = aux2.getNextD().getNextD();
+                        diccO = aux;
+                        aux2.cambiaNextD(aux3);
+                        return true;
+                    }
+                }
             }
-            aux = aux.getNextO();
+        } else {
+            NodoLD aux = diccO;
+            while (aux != null) {
+                if (aux.getNextO() != null && aux.getNextO().getPalabraO() != null && aux.getNextO().getPalabraO().compareToIgnoreCase(s) == 0) {
+                    if (aux.getNextO() == diccD){
+                        NodoLD aux2, aux3;
+                        aux2 = aux.getNextO().getNextO();
+                        aux3 = diccD.getNextD();
+                        aux.cambiaNextO(aux2);
+                        diccD = aux3;
+                        return true;
+                    } else {
+                        NodoLD aux2 = diccD;
+                        while (aux2 != null) {
+                            if (aux2.getNextD() == aux.getNextO()) {
+                                NodoLD aux3, aux4;
+                                aux3 = aux.getNextO().getNextO();
+                                aux4 = aux2.getNextD().getNextD();
+                                aux.cambiaNextO(aux3);
+                                aux2.cambiaNextD(aux4);
+                                return true;
+                            }
+                            aux2 = aux2.getNextD();
+                        }
+                    }
+                }
+                aux = aux.getNextO();
+            }
         }
         return false;
     }
     public boolean borraD(String s){
         if (diccD != null && diccD.getPalabraD() != null && diccD.getPalabraD().compareToIgnoreCase(s) == 0){
-            if (diccD.getNextD() != null){
-                diccD = diccD.getNextD();
-            } else diccD = null;
-            return true;
-        }
-        NodoLD aux = diccD;
-        while (aux != null) {
-            if (aux.getNextD() != null && aux.getNextD().getPalabraD() != null && aux.getNextD().getPalabraD().compareToIgnoreCase(s) == 0){
-                aux.cambiaNextD(aux.getNextD().getNextD());
+            if (diccO == diccD){
+                NodoLD aux, aux2;
+                aux = diccO.getNextO();
+                aux2 = diccD.getNextD();
+                diccO = aux;
+                diccD = aux2;
                 return true;
+            } else {
+                NodoLD aux, aux2, aux3;
+                aux = diccD.getNextD();
+                aux2 = diccO;
+                while (aux2 != null) {
+                    if (diccD == aux2.getNextD()){
+                        aux3 = aux2.getNextO().getNextO();
+                        diccD = aux;
+                        aux2.cambiaNextO(aux3);
+                        return true;
+                    }
+                }
             }
-            aux = aux.getNextD();
+        } else {
+            NodoLD aux = diccD;
+            while (aux != null) {
+                if (aux.getNextD() != null && aux.getNextD().getPalabraD() != null && aux.getNextD().getPalabraD().compareToIgnoreCase(s) == 0) {
+                    if (aux.getNextD() == diccO){
+                        NodoLD aux2, aux3;
+                        aux2 = aux.getNextD().getNextD();
+                        aux3 = diccO.getNextO();
+                        aux.cambiaNextD(aux2);
+                        diccO = aux3;
+                        return true;
+                    } else {
+                        NodoLD aux2 = diccO;
+                        while (aux2 != null) {
+                            if (aux2.getNextO() == aux.getNextD()) {
+                                NodoLD aux3, aux4;
+                                aux3 = aux.getNextD().getNextD();
+                                aux4 = aux2.getNextO().getNextO();
+                                aux.cambiaNextD(aux3);
+                                aux2.cambiaNextO(aux4);
+                                return true;
+                            }
+                            aux2 = aux2.getNextO();
+                        }
+                    }
+                }
+                aux = aux.getNextD();
+            }
         }
         return false;
     }
@@ -116,9 +188,7 @@ public class ListaBilingue {
         NodoLD aux = diccO;
         if (s != null) {
             while (aux != null) {
-                if (aux.getPalabraO() != null){
-                    if (aux.getPalabraO().compareToIgnoreCase(s) == 0) return aux.getPalabraD();
-                }
+                if (aux.getPalabraO() != null && aux.getPalabraO().compareToIgnoreCase(s) == 0) return aux.getPalabraD();
                 aux = aux.getNextO();
             }
         }
@@ -128,9 +198,7 @@ public class ListaBilingue {
         NodoLD aux = diccD;
         if (s != null) {
             while (aux != null) {
-                if (aux.getPalabraD() != null){
-                    if (aux.getPalabraD().compareToIgnoreCase(s) == 0) return aux.getPalabraO();
-                }
+                if (aux.getPalabraD() != null && aux.getPalabraD().compareToIgnoreCase(s) == 0) return aux.getPalabraO();
                 aux = aux.getNextD();
             }
         }

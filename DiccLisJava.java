@@ -2,16 +2,16 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.LinkedList;
+import java.util.ArrayList;
 
 public class DiccLisJava implements Diccionario {
 	private int nlenguas;
-	private LinkedList<Character> lenguas;
-	private LinkedList<Palabra2> dicc;
+	private ArrayList<Character> lenguas;
+	private ArrayList<Palabra2> dicc;
 	public DiccLisJava(){
 		nlenguas = -1;
-		lenguas = new LinkedList<Character> ();
-		dicc = new LinkedList<Palabra2> ();
+		lenguas = new ArrayList<Character> ();
+		dicc = new ArrayList<Palabra2> ();
 	}
 
 	public void leeDiccionario(String f) {
