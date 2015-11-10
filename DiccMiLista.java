@@ -155,8 +155,6 @@ public class DiccMiLista implements Diccionario {
 	
 	public void visualiza() {
 		NodoL aux = dicc;
-		/*System.out.println("HOLA:"+dicc.getPalabra2().getOrigen());
-		System.out.println("HOLA:"+dicc.getNext().getPalabra2().getOrigen());*/
 		while (aux != null && aux.getPalabra2() != null) {
 			aux.getPalabra2().escribeInfo();
 			aux = aux.getNext();
@@ -185,7 +183,7 @@ public class DiccMiLista implements Diccionario {
 		}
 	}
 
-	private static class NodoL {
+	private class NodoL {
         private Palabra2 pal;
         private NodoL next;
 
