@@ -1,3 +1,4 @@
+//DNI 77842527Q GONZALEZ ALVARADO, MARIO
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -8,13 +9,15 @@ public class DiccMiLista implements Diccionario {
 	private int nlenguas;
 	private Vector<Character> lenguas;
 	private NodoL dicc;
-	
+
+	/*Se inicializa la clase DiccMiLista*/
 	public DiccMiLista(){
 		nlenguas = -1;
 		lenguas = new Vector<Character> ();
 		dicc = new NodoL();
 	}
 
+	/*Carga un archivo de diccionario e inserta las traducciones*/
 	public void leeDiccionario(String f) {
 		if (f != null) {
 			FileReader fr;
@@ -55,7 +58,7 @@ public class DiccMiLista implements Diccionario {
 		}
 	}
 
-	
+	/*Inserta una palabra en el diccionario ordenada alfabeticamente*/
 	public boolean inserta(Palabra2 p) {
 		if (p != null && !p.getOrigen().equals("") && p.getLenguas().length == lenguas.size()) {
 			char[] len = p.getLenguas();
@@ -109,7 +112,7 @@ public class DiccMiLista implements Diccionario {
 		return false;
 	}
 
-	
+	/*Borra una palabra del diccionario*/
 	public boolean borra(String s) {
 		if (dicc != null && dicc.getPalabra2() != null && dicc.getPalabra2().getOrigen() != null && dicc.getPalabra2().getOrigen().compareToIgnoreCase(s) == 0){
 			if (dicc.getNext() != null){
@@ -128,7 +131,7 @@ public class DiccMiLista implements Diccionario {
 		return false;
 	}
 
-	
+	/*Busca una palabra en el diccionario*/
 	public int busca(String s) {
 		NodoL aux = dicc;
 		int it=0;
@@ -145,7 +148,7 @@ public class DiccMiLista implements Diccionario {
 		return it*-1;
 	}
 
-	
+	/*Obtiene la traduccion de la cadena especificada para la lengua especificada*/
 	public String traduce(String s, char l) {
 		NodoL aux = dicc;
 		if (s != null){
@@ -160,7 +163,7 @@ public class DiccMiLista implements Diccionario {
 		return null;
 	}
 
-	
+	/*Visualiza el contenido del vector ordenada con el formato especificado*/
 	public void visualiza() {
 		NodoL aux = dicc;
 		while (aux != null && aux.getPalabra2() != null) {
@@ -169,7 +172,7 @@ public class DiccMiLista implements Diccionario {
 		}
 	}
 
-	
+	/*Visualiza el contenido ordenado hasta el indice j*/
 	public void visualiza(int j) {
 		NodoL aux = dicc;
 		int cont = 0;
@@ -180,7 +183,7 @@ public class DiccMiLista implements Diccionario {
 		}
 	}
 
-	
+	/*Visualiza el contenido ordenado hasta el indice j para la lengua l*/
 	public void visualiza(int j, char l) {
 		NodoL aux = dicc;
 		int cont = 0;

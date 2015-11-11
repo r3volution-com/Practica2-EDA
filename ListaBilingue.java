@@ -1,3 +1,4 @@
+//DNI 77842527Q GONZALEZ ALVARADO, MARIO
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -7,10 +8,12 @@ import java.util.Vector;
 public class ListaBilingue {
     private NodoLD diccO;
     private NodoLD diccD;
+    /*Constructor de la clase ListaBilingue*/
     public ListaBilingue(){
         diccO = null;
         diccD = null;
     }
+    /*Carga un archivo de diccionario e inserta las traducciones*/
     public void leeDiccionario(String f){
         if (f != null) {
             FileReader fr;
@@ -37,6 +40,7 @@ public class ListaBilingue {
             }
         }
     }
+    /*Inserta las traducciones ordenadas en el diccionario, con doble enlace*/
     public boolean inserta(String o, String d) {
         if (o != null && d != null && !o.equals("") && !d.equals("")) {
             boolean oexists = false, dexists = false, oinsertado = false, dinsertado = false;
@@ -70,7 +74,7 @@ public class ListaBilingue {
                     aux2 = aux2.getNextO();
                 }
                 NodoLD aux3 = diccD;
-                if (diccO.getPalabraD() != null && diccD.getPalabraD().compareToIgnoreCase(d) > 0){
+                if (diccD.getPalabraD() != null && diccD.getPalabraD().compareToIgnoreCase(d) > 0){
                     set.cambiaNextD(diccD);
                     diccD = set;
                     dinsertado = true;
@@ -88,6 +92,7 @@ public class ListaBilingue {
         }
         return false;
     }
+    /*Igual que la anterior pero con la posiblidad de insertar traducciones repetidas (acepciones)*/
     public boolean insertaRepetido(String o, String d) {
         if (o != null && d != null && !o.equals("") && !d.equals("")) {
             boolean exists = false, oinsertado = false, dinsertado = false;
@@ -100,11 +105,13 @@ public class ListaBilingue {
                 return true;
             }
             NodoLD aux = diccO;
+            //Este es el bucle que busca que no se encuentren repetidas las 2 palabras juntas
             while (aux != null && !exists) {
                 if ((aux.getPalabraO() != null && aux.getPalabraO().compareToIgnoreCase(o) == 0) && (aux.getPalabraD() != null && aux.getPalabraD().compareToIgnoreCase(d) == 0)) exists = true;
                 aux = aux.getNextO();
             }
             if (!exists){
+                //Los casos estan modificados para permitir insertar la palabra repetida antes del resto de sus acepciones
                 if (diccO.getPalabraO() != null && (diccO.getPalabraO().compareToIgnoreCase(o) > 0 || diccO.getPalabraO().compareToIgnoreCase(o) == 0)){
                     set.cambiaNextO(diccO);
                     diccO = set;
@@ -154,6 +161,7 @@ public class ListaBilingue {
         }
         return false;
     }
+    /*Borra una palabra buscandola en la cadena origen*/
     public boolean borraO(String s){
         if (s != null) {
             if (diccO != null && diccO.getPalabraO() != null && diccO.getPalabraO().compareToIgnoreCase(s) == 0) {
@@ -210,6 +218,7 @@ public class ListaBilingue {
         }
         return false;
     }
+    /*Borra una palabra de la cadena destino*/
     public boolean borraD(String s){
         if (s != null) {
             if (diccD != null && diccD.getPalabraD() != null && diccD.getPalabraD().compareToIgnoreCase(s) == 0){
@@ -266,6 +275,7 @@ public class ListaBilingue {
         }
         return false;
     }
+    /*Busca por el metodo lineal en la cadena Origen*/
     public String buscaO(String s){
         NodoLD aux = diccO;
         if (s != null) {
@@ -276,6 +286,7 @@ public class ListaBilingue {
         }
         return null;
     }
+    /*Busca por el metodo lineal en la cadena Destino*/
     public String buscaD(String s){
         NodoLD aux = diccD;
         if (s != null) {
@@ -286,6 +297,7 @@ public class ListaBilingue {
         }
         return null;
     }
+    /*Obtiene el indice de una palabra en la cadena Origen */
     public int indiceO(String s){
         NodoLD aux = diccO;
         int it=0;
@@ -301,6 +313,7 @@ public class ListaBilingue {
         }
         return -1;
     }
+    /*Obtiene el indice de una palabra en la cadena Destino*/
     public int indiceD(String s){
         NodoLD aux = diccD;
         int it=0;
@@ -316,6 +329,7 @@ public class ListaBilingue {
         }
         return -1;
     }
+    /*Visualiza las palabras ordenadas por la cadena Origen*/
     public void visualizaO(){
         NodoLD aux = diccO;
         while (aux != null && aux.getPalabraO() != null) {
@@ -323,6 +337,7 @@ public class ListaBilingue {
             aux = aux.getNextO();
         }
     }
+    /*Visualiza las palabras ordenadas por la cadena Destino*/
     public void visualizaD(){
         NodoLD aux = diccD;
         while (aux != null && aux.getPalabraD() != null) {
@@ -330,6 +345,7 @@ public class ListaBilingue {
             aux = aux.getNextD();
         }
     }
+    /*Visualiza las palabras repetidas ordenadas por origen con el formato especificado*/
     public void visualizaRepetidosO(){
         NodoLD aux = diccO;
         String origenactual = "";
@@ -358,6 +374,7 @@ public class ListaBilingue {
         if (!cadenatotal.equals("")) System.out.print(cadenatotal);
         else System.out.println("No existe");
     }
+    /*Visualiza las palabras repetidas ordenadas por destino con el formato especificado*/
     public void visualizaRepetidosD(){
         NodoLD aux = diccD;
         String origenactual = "";
@@ -382,6 +399,7 @@ public class ListaBilingue {
         if (!cadenatotal.equals("")) System.out.print(cadenatotal);
         else System.out.println("No existe");
     }
+    /*Obtiene un string en la posicion i de la cadena O*/
     public Vector<String> getO(int i){
         NodoLD aux = diccO;
         Vector<String> ret = new Vector<String>();
@@ -397,6 +415,7 @@ public class ListaBilingue {
         }
         return null;
     }
+    /*Obtiene un vector de String en la posicion i de la cadena D*/
     public Vector<String> getD(int i) {
         NodoLD aux = diccD;
         Vector<String> ret = new Vector<String>();

@@ -1,3 +1,4 @@
+//DNI 77842527Q GONZALEZ ALVARADO, MARIO
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -8,12 +9,14 @@ public class DiccVector implements Diccionario {
 	private int nlenguas;
 	private Vector<Character> lenguas;
 	private Vector<Palabra2> dicc;
+	/*Se inicializa la clase DiccVector*/
 	public DiccVector(){
 		nlenguas = -1;
 		lenguas = new Vector<Character> ();
 		dicc = new Vector<Palabra2> ();
 	}
-	
+
+	/*Carga un archivo de diccionario e inserta las traducciones*/
 	public void leeDiccionario(String f) {
 		if (f != null) {
 			FileReader fr;
@@ -55,7 +58,7 @@ public class DiccVector implements Diccionario {
 			}
 		}
 	}
-	
+	/*Inserta una palabra en el Vector de String ordenada alfabeticamente*/
 	public boolean inserta(Palabra2 p) {
 		if (p != null && p.getOrigen() != null && !p.getOrigen().equalsIgnoreCase("") && p.getLenguas().length == lenguas.size()) {
 			char[] len = p.getLenguas();
@@ -81,7 +84,7 @@ public class DiccVector implements Diccionario {
 		}
 		return false;
 	}
-	
+	/*Borra una palabra del Vector*/
 	public boolean borra(String s) {
 		if (s != null) {
 			int position = getPosicionBinario(s);
@@ -92,7 +95,7 @@ public class DiccVector implements Diccionario {
 		}
 		return false;
 	}
-
+	/*Busca una palabra en el Vector*/
 	public int busca(String s) {
 		int iteraciones = 0, centro, min = 0, max = dicc.size()-1;
 		if (s != null) {
@@ -106,7 +109,7 @@ public class DiccVector implements Diccionario {
 		}
 		return (iteraciones * -1);
 	}
-	
+	/*Obtiene la traduccion de la cadena especificada para la lengua especificada*/
 	public String traduce(String s, char l) {
 		if (s != null) {
 			int position = getPosicionBinario(s);
@@ -114,32 +117,32 @@ public class DiccVector implements Diccionario {
 		}
 		return null;
 	}
-	
+	/*Visualiza el contenido del vector ordenada con el formato especificado*/
 	public void visualiza() {
 		for (int i = 0; i<dicc.size(); i++){
 			dicc.elementAt(i).escribeInfo();
 		}
 	}
-	
+	/*Visualiza el contenido ordenado hasta el indice j*/
 	public void visualiza(int j) {
 		for (int i = 0; i < j && i < dicc.size(); i++){
 			dicc.elementAt(i).escribeInfo();
 		}
 	}
-	
+	/*Visualiza el contenido ordenado hasta el indice j para la lengua l*/
 	public void visualiza(int j, char l) {
 		for (int i = 0; i < j && i < dicc.size(); i++) {
 			dicc.elementAt(i).escribeInfo(l);
 		}
 	}
-
+	/*Obtiene la posicion de una cadena en el diccionario con un algoritmo lineal*/
 	public int getPosicionLineal(String s){
 		for (int i = 0; i < dicc.size(); i++){
 			if (dicc.elementAt(i).getOrigen().compareToIgnoreCase(s) > 0) return i;
 		}
 		return dicc.size();
 	}
-
+	/*Obtiene la posicion de una cadena por el algoritmo binario*/
 	public int getPosicionBinario(String s){
 		int centro = 0, min = 0, max = dicc.size()-1;
 		while(min<=max){

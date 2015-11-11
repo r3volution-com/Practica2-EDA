@@ -1,4 +1,4 @@
-
+//DNI 77842527Q GONZALEZ ALVARADO, MARIO
 public interface Diccionario {
 	public void leeDiccionario(String f);
 	public boolean inserta(Palabra2 p);
