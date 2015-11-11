@@ -68,6 +68,13 @@ public class DiccMiLista implements Diccionario {
 				dicc = new NodoL();
 			}
 			NodoL aux = dicc;
+			if (dicc.getPalabra2() != null && dicc.getPalabra2().getOrigen() != null && dicc.getPalabra2().getOrigen().compareToIgnoreCase(p.getOrigen()) > 0){
+				NodoL aux2 = new NodoL();
+				aux2.setPalabra2(p);
+				aux2.cambiaNext(dicc);
+				dicc = aux2;
+				return true;
+			}
 			while (aux != null){
 				Palabra2 pal = aux.getPalabra2();
 				if (pal == null){
@@ -79,7 +86,7 @@ public class DiccMiLista implements Diccionario {
 						for (int i = 0; lenguas != null && i < lenguas.length; i++) {
 							if (p.getTraduccion(lenguas[i]) != null && pal.setTrad(p.getTraduccion(lenguas[i]), lenguas[i]) != -1) return true;
 						}
-						return true;
+						return false;
 					} else if (aux.getNext() == null){
 						NodoL aux2 = new NodoL();
 						aux2.setPalabra2(p);
@@ -96,7 +103,6 @@ public class DiccMiLista implements Diccionario {
 				}
 				aux = aux.getNext();
 			}
-
 		}
 		return false;
 	}

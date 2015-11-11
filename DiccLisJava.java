@@ -57,7 +57,7 @@ public class DiccLisJava implements Diccionario {
 	}
 
 	public boolean inserta(Palabra2 p) {
-		if (p != null && p.getLenguas().length == lenguas.size()) {
+		if (p != null && p.getOrigen() != null && !p.getOrigen().equalsIgnoreCase("") && p.getLenguas().length == lenguas.size()) {
 			char[] len = p.getLenguas();
 			for (int i = 0; i < len.length && i < lenguas.size(); i++){
 				if (len[i] != lenguas.get(i)){
@@ -71,10 +71,12 @@ public class DiccLisJava implements Diccionario {
 				return true;
 			} else {
 				Palabra2 pal = dicc.get(position);
+				boolean insertado = false;
 				char[] lenguas = p.getLenguas();
 				for (int i = 0; pal != null && i < lenguas.length; i++) {
-					if (p.getTraduccion(lenguas[i]) != null && pal.setTrad(p.getTraduccion(lenguas[i]), lenguas[i]) != -1) return true;
+					if (p.getTraduccion(lenguas[i]) != null && pal.setTrad(p.getTraduccion(lenguas[i]), lenguas[i]) != -1) insertado = true;
 				}
+				if (insertado) return true;
 			}
 		}
 		return false;
