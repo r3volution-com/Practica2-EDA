@@ -117,7 +117,6 @@ public class DiccVector implements Diccionario {
 	
 	public void visualiza() {
 		for (int i = 0; i<dicc.size(); i++){
-			//System.out.println("SUPUTAMADRE"+dicc.elementAt(i).getOrigen());
 			dicc.elementAt(i).escribeInfo();
 		}
 	}

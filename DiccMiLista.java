@@ -57,7 +57,7 @@ public class DiccMiLista implements Diccionario {
 
 	
 	public boolean inserta(Palabra2 p) {
-		if (p != null && p.getLenguas().length == lenguas.size()) {
+		if (p != null && !p.getOrigen().equals("") && p.getLenguas().length == lenguas.size()) {
 			char[] len = p.getLenguas();
 			for (int i = 0; i < len.length && i < lenguas.size(); i++){
 				if (len[i] != lenguas.elementAt(i)){
@@ -83,10 +83,12 @@ public class DiccMiLista implements Diccionario {
 				} else {
 					if (pal.getOrigen() != null && pal.getOrigen().compareToIgnoreCase(p.getOrigen()) == 0) {
 						char[] lenguas = p.getLenguas();
+						boolean insertado = false;
 						for (int i = 0; lenguas != null && i < lenguas.length; i++) {
-							if (p.getTraduccion(lenguas[i]) != null && pal.setTrad(p.getTraduccion(lenguas[i]), lenguas[i]) != -1) return true;
+							if (p.getTraduccion(lenguas[i]) != null && !p.getTraduccion(lenguas[i]).equals("") && pal.setTrad(p.getTraduccion(lenguas[i]), lenguas[i]) != -1) insertado = true;
 						}
-						return false;
+						if (insertado) return true;
+						else return false;
 					} else if (aux.getNext() == null){
 						NodoL aux2 = new NodoL();
 						aux2.setPalabra2(p);

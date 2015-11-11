@@ -105,28 +105,44 @@ public class ListaBilingue {
                 aux = aux.getNextO();
             }
             if (!exists){
-                if (diccO.getPalabraO() != null && diccO.getPalabraO().compareToIgnoreCase(o) > 0){
+                if (diccO.getPalabraO() != null && (diccO.getPalabraO().compareToIgnoreCase(o) > 0 || diccO.getPalabraO().compareToIgnoreCase(o) == 0)){
                     set.cambiaNextO(diccO);
                     diccO = set;
+                    oinsertado = true;
+                } else if (diccO.getNextO() != null && diccO.getNextO().getPalabraO() != null && diccO.getNextO().getPalabraO().compareToIgnoreCase(o) == 0) {
+                    set.cambiaNextO(diccO.getNextO());
+                    diccO.cambiaNextO(set);
                     oinsertado = true;
                 }
                 NodoLD aux2 = diccO;
                 while (aux2 != null && !oinsertado) {
-                    if (aux2.getNextO() == null || (aux2.getNextO() != null && aux2.getNextO().getPalabraO() != null && aux2.getNextO().getPalabraO().compareToIgnoreCase(o) > 0)) {
+                    if (aux2.getNextO() != null && aux2.getNextO() != null && aux2.getNextO().getPalabraO() != null && aux2.getNextO().getPalabraO().compareToIgnoreCase(o) == 0){
+                        set.cambiaNextO(aux2.getNextO());
+                        aux2.cambiaNextO(set);
+                        oinsertado = true;
+                    } else if (aux2.getNextO() == null || (aux2.getNextO() != null && aux2.getNextO().getPalabraO() != null && aux2.getNextO().getPalabraO().compareToIgnoreCase(o) > 0)) {
                         oinsertado = true;
                         set.cambiaNextO(aux2.getNextO());
                         aux2.cambiaNextO(set);
                     }
                     aux2 = aux2.getNextO();
                 }
-                if (diccO.getPalabraD() != null && diccD.getPalabraD().compareToIgnoreCase(d) > 0){
+                if (diccD.getPalabraD() != null && (diccD.getPalabraD().compareToIgnoreCase(d) > 0 || diccD.getPalabraD().compareToIgnoreCase(d) == 0)){
                     set.cambiaNextD(diccD);
                     diccD = set;
+                    dinsertado = true;
+                } else if (diccD.getNextD() != null && diccD.getNextD().getPalabraD() != null && diccD.getNextD().getPalabraD().compareToIgnoreCase(d) == 0) {
+                    set.cambiaNextD(diccD.getNextD());
+                    diccD.cambiaNextD(set);
                     dinsertado = true;
                 }
                 NodoLD aux3 = diccD;
                 while (aux3 != null && !dinsertado) {
-                    if (aux3.getNextD() == null || (aux3.getNextD() != null && aux3.getNextD().getPalabraD() != null && aux3.getNextD().getPalabraD().compareToIgnoreCase(d) > 0)) {
+                    if (aux3.getNextD() != null && aux3.getNextD() != null && aux3.getNextD().getPalabraD() != null && aux3.getNextD().getPalabraD().compareToIgnoreCase(d) == 0){
+                        set.cambiaNextD(aux3.getNextD());
+                        aux3.cambiaNextD(set);
+                        dinsertado = true;
+                    } else if (aux3.getNextD() == null || (aux3.getNextD() != null && aux3.getNextD().getPalabraD() != null && aux3.getNextD().getPalabraD().compareToIgnoreCase(d) > 0)) {
                         dinsertado = true;
                         set.cambiaNextD(aux3.getNextD());
                         aux3.cambiaNextD(set);
@@ -295,7 +311,7 @@ public class ListaBilingue {
                     if (aux.getPalabraD().compareToIgnoreCase(s) == 0) return it;
                     else if (aux.getPalabraD().compareToIgnoreCase(s) > 0) return -1;
                 }
-                aux = aux.getNextO();
+                aux = aux.getNextD();
             }
         }
         return -1;
@@ -371,7 +387,7 @@ public class ListaBilingue {
         Vector<String> ret = new Vector<String>();
         int cont = 0;
         while (aux != null && aux.getPalabraO() != null && cont <= i) {
-            if (cont == i) {
+            if (cont == i-1) {
                 ret.add(aux.getPalabraO());
                 ret.add(aux.getPalabraD());
                 return ret;
@@ -386,7 +402,7 @@ public class ListaBilingue {
         Vector<String> ret = new Vector<String>();
         int cont = 0;
         while (aux != null && aux.getPalabraD() != null && cont <= i) {
-            if (cont == i) {
+            if (cont == i-1) {
                 ret.add(aux.getPalabraO());
                 ret.add(aux.getPalabraD());
                 return ret;
